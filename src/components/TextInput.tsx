@@ -25,7 +25,7 @@ const S = StyleSheet.create({
   spacer: { height: 8 },
   container: {
     flexDirection: "row",
-    borderRadius: 6,
+    borderRadius: 12,
     borderWidth: 1,
     paddingHorizontal: C.spacingLarge,
   },
@@ -162,6 +162,8 @@ export const TextInput = forwardRef<RNTextInput, TextInputProps>(
       ? C.colorDarkAccentLighter
       : C.colorDarkAccent;
 
+    const borderRadius = (style as any).borderRadius ?? 30;
+
     return (
       <View>
         {!!label && (
@@ -173,10 +175,7 @@ export const TextInput = forwardRef<RNTextInput, TextInputProps>(
         <View>
           {isFocused && !error && (
             <LinearGradient
-              style={[
-                StyleSheet.absoluteFill,
-                { borderRadius: 30, margin: -1 },
-              ]}
+              style={[StyleSheet.absoluteFill, { borderRadius, margin: -1 }]}
               start={{ x: 0, y: 0 }}
               end={{ x: 1, y: 0 }}
               locations={[0, 0.8, 1]}
@@ -194,12 +193,17 @@ export const TextInput = forwardRef<RNTextInput, TextInputProps>(
                     borderBottomRightRadius: 0,
                     borderBottomWidth: 0,
                   }
-                : { borderRadius: 30 },
+                : { borderRadius },
               otherProps.multiline ? { paddingVertical: C.spacingSmall } : {},
               containerStyle,
             ]}
           >
-            {leftComponent ? leftComponent() : null}
+            {leftComponent ? (
+              <View flexDirectionRow>
+                {leftComponent()}
+                <Spacer small />
+              </View>
+            ) : null}
             <RNTextInput
               ref={ref}
               placeholderTextColor={C.colorDarkAccentLight}
@@ -225,7 +229,6 @@ export const TextInput = forwardRef<RNTextInput, TextInputProps>(
             {rightComponent ? rightComponent() : null}
           </View>
         </View>
-        <Text colorDanger>{caption}</Text>
         <Collapsible collapsed={!caption}>
           <Spacer small />
           <Text sizeSmall colorDanger={error} weightRegular>

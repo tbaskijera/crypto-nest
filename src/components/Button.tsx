@@ -82,7 +82,7 @@ export const Button = forwardRef<TouchableOpacity, ButtonProps>(
     const shouldRenderTitle = typeof title === "string";
 
     const resolveBackgroundColor = () => {
-      if (withGradient) return "transparent";
+      if (withGradient && !disabled) return "transparent";
       if (outline) return "transparent";
       if (transparent) return "transparent";
 
@@ -188,7 +188,7 @@ export const Button = forwardRef<TouchableOpacity, ButtonProps>(
           {...props}
         >
           <>
-            {withGradient && (
+            {withGradient && !disabled && (
               <LinearGradient
                 style={[
                   StyleSheet.absoluteFill,
