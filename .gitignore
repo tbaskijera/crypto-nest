@@ -1,2 +1,5 @@
 node_modules
 .eslintcache
+.expo
+.yarn
+.DS_Store
