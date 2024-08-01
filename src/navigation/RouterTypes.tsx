@@ -1,4 +1,5 @@
 import type {
+  NavigatorScreenParams,
   // NavigatorScreenParams,
   RouteProp as RNRouteProp,
 } from "@react-navigation/native";
@@ -6,11 +7,16 @@ import type {
 // --------------------------------------------
 // Start navigator params definitions
 
+export type MainTabParams = {
+  WalletScreen: undefined;
+  SettingsScreen: undefined;
+};
+
 // TopLevelStack
 export type TopLevelStackParams = {
-  // MainTab: NavigatorScreenParams<MainTabParams>;
+  MainTab: NavigatorScreenParams<MainTabParams>;
   WelcomeScreen: undefined;
-  CreatePinScreen: undefined;
+  CreatePasswordScreen: undefined;
   GenerateSeedPhraseScreen: undefined;
   ConfirmSeedPhraseScreen: undefined;
   CreateNewWalletSuccessScreen: undefined;

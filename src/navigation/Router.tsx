@@ -1,17 +1,18 @@
 import type { NavigationContainerProps } from "@react-navigation/native";
 import { NavigationContainer } from "@react-navigation/native";
-import React from "react";
-import { TopLevelStackParams } from "./RouterTypes";
 import {
   NativeStackNavigationOptions,
   createNativeStackNavigator,
 } from "@react-navigation/native-stack";
+import React, { Fragment } from "react";
+import { Header } from "../components/Header";
 import { WelcomeScreen } from "../screens/WelcomeScreen";
-import { CreatePinScreen } from "../screens/create-new-wallet/CreatePinScreen";
-import { GenerateSeedPhraseScreen } from "../screens/create-new-wallet/GenerateSeedPhraseScreen";
 import { ConfirmSeedPhraseScreen } from "../screens/create-new-wallet/ConfirmSeedPhraseScreen";
 import { CreateNewWalletSuccessScreen } from "../screens/create-new-wallet/CreateNewWalletSuccessScreen";
-import { Header } from "../components/Header";
+import { CreatePasswordScreen } from "../screens/create-new-wallet/CreatePasswordScreen";
+import { GenerateSeedPhraseScreen } from "../screens/create-new-wallet/GenerateSeedPhraseScreen";
+import { BottomTabs } from "./BottomTabs";
+import { TopLevelStackParams } from "./RouterTypes";
 
 export interface RouterProps {
   navigationContainerProps: Partial<NavigationContainerProps>;
@@ -19,6 +20,7 @@ export interface RouterProps {
 }
 
 const Stack = createNativeStackNavigator<TopLevelStackParams>();
+const isPastOnboarding = false;
 
 const screenOptions: NativeStackNavigationOptions = {
   animation: "slide_from_right",
@@ -30,26 +32,45 @@ export const Router = function Router() {
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={screenOptions}>
-        <Stack.Screen
-          name={"WelcomeScreen"}
-          component={WelcomeScreen}
-          options={{ headerShown: false }}
-        />
+        {!isPastOnboarding ? (
+          <Fragment>
+            <Stack.Screen
+              name={"WelcomeScreen"}
+              component={WelcomeScreen}
+              options={{ headerShown: false }}
+            />
 
-        <Stack.Screen name="CreatePinScreen" component={CreatePinScreen} />
-        <Stack.Screen
-          name="GenerateSeedPhraseScreen"
-          component={GenerateSeedPhraseScreen}
-        />
-        <Stack.Screen
-          name="ConfirmSeedPhraseScreen"
-          component={ConfirmSeedPhraseScreen}
-        />
+            <Stack.Screen
+              name="CreatePasswordScreen"
+              component={CreatePasswordScreen}
+            />
+            <Stack.Screen
+              name="GenerateSeedPhraseScreen"
+              component={GenerateSeedPhraseScreen}
+            />
+            <Stack.Screen
+              name="ConfirmSeedPhraseScreen"
+              component={ConfirmSeedPhraseScreen}
+            />
 
-        <Stack.Screen
-          name="CreateNewWalletSuccessScreen"
-          component={CreateNewWalletSuccessScreen}
-        />
+            <Stack.Screen
+              name="CreateNewWalletSuccessScreen"
+              component={CreateNewWalletSuccessScreen}
+            />
+          </Fragment>
+        ) : (
+          <Fragment>
+            <Stack.Screen name="MainTab" options={{ headerShown: false }}>
+              {() => <BottomTabs />}
+            </Stack.Screen>
+
+            {/* <Stack.Screen
+              name="WelcomeScreen"
+              component={WelcomeScreen}
+              options={{ headerShown: false }}
+            /> */}
+          </Fragment>
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
