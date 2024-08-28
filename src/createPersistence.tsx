@@ -7,6 +7,7 @@ export function createPersistence(AsyncStorage = RNAsyncStorage) {
       if (valueString === null) return undefined;
       try {
         const value = JSON.parse(valueString);
+        console.log("Parsed value: ", value);
         return value;
       } catch {
         console.log(
