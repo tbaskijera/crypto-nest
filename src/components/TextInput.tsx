@@ -68,6 +68,8 @@ export interface TextInputProps extends RNTextInputProps {
   children?: ReactNode;
 
   screenRef?: React.RefObject<ScrollView>;
+
+  shouldTruncate?: boolean;
 }
 
 export const TextInput = forwardRef<RNTextInput, TextInputProps>(
@@ -107,6 +109,8 @@ export const TextInput = forwardRef<RNTextInput, TextInputProps>(
       hasDropdown,
 
       screenRef,
+
+      shouldTruncate = false,
 
       ...props
     },
@@ -162,7 +166,7 @@ export const TextInput = forwardRef<RNTextInput, TextInputProps>(
       ? C.colorDarkAccentLighter
       : C.colorDarkAccent;
 
-    const borderRadius = (style as any).borderRadius ?? 30;
+    const borderRadius = (style as any)?.borderRadius ?? 30;
 
     return (
       <View>

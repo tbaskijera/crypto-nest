@@ -93,8 +93,8 @@ export function AlertProvider({ children, ...otherProps }: AlertProviderProps) {
       <React.Fragment key={button.text}>
         {index !== 0 && <Spacer />}
         <Button
-          title="Zatvori"
-          withGradient
+          title={button.text}
+          // withGradient
           outline={button.style === "cancel"}
           medium
           onPress={() => {
