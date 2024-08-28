@@ -1,16 +1,16 @@
 import React from "react";
-import { FlatList, StyleSheet, TextInput as RNTextInput } from "react-native";
+import { FlatList, TextInput as RNTextInput, StyleSheet } from "react-native";
 import { Spacer } from "../../components/Spacer";
-import { Text } from "../../components/Text";
-import { TextInput } from "../../components/TextInput";
-import { View } from "../../components/View";
 import { useStore } from "../../mobx/utils/useStore";
 import { styleConstants as C } from "../../styleConstants";
 import { SeedPhraseInputItem } from "./SeedPhraseInputItem";
 
-export const useSeedPhraseInputView = function useSeedPhraseInputView() {
+export const useSeedPhraseInputView = function useSeedPhraseInputView({
+  confirmSeedPhrase,
+}: {
+  confirmSeedPhrase: string[];
+}) {
   const store = useStore();
-  const confirmSeedPhrase = store.seedPhraseStore.confirmedSeedPhrase;
   const updateConfirmedSeedPhrase =
     store.seedPhraseStore.setConfirmedSeedPhrase;
 
