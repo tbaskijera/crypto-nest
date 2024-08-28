@@ -16,7 +16,7 @@ export const styleConstants = {
   colorWarning: "rgba(255, 204, 0, 1)",
   colorDanger: "rgba(255, 99, 71, 1)",
 
-  colorBackdrop: "rgba(166, 160, 187, 0.3)",
+  colorBackdrop: "rgba(0, 0, 0, 0.7)",
 
   colorGradientA: "rgba(0, 255, 163, 1)",
   colorGradientB: "rgba(3, 255, 255, 1)",

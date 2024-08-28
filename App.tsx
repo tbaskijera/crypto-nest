@@ -12,10 +12,13 @@ import { RootStoreInstance } from "./src/mobx/RootStore";
 import { useMSTFastRefresh } from "./src/mobx/useMSTFastRefresh";
 import { reloadIfStoreInitializedTwice } from "./src/mobx/reloadIfStoreInitializedTwice";
 import { initialize } from "./src/initialize";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ToastProvider } from "./src/components/toast/ToastProvider";
 
 export default function App() {
   const [isAppReady, setIsAppReady] = useState(false);
   const store = useRef<RootStoreInstance | undefined>(undefined);
+  const queryClient = useRef<QueryClient | undefined>(undefined);
 
   useMSTFastRefresh(store);
 
@@ -25,7 +28,9 @@ export default function App() {
     const init = async () => {
       const context = await initialize();
       store.current = context.store;
+      queryClient.current = context.queryClient;
       await SystemUI.setBackgroundColorAsync(C.colorDark);
+      store.current.walletStore.initializeWalletSync();
       setIsAppReady(true);
     };
     init();
@@ -36,14 +41,18 @@ export default function App() {
   }
   return (
     <MSTProvider store={store.current}>
-      <SafeAreaProvider>
-        <ModalProvider>
-          <AlertProvider>
-            <StatusBar style="light" />
-            <Router />
-          </AlertProvider>
-        </ModalProvider>
-      </SafeAreaProvider>
+      <QueryClientProvider client={queryClient.current as QueryClient}>
+        <SafeAreaProvider>
+          <ModalProvider>
+            <AlertProvider>
+              <ToastProvider>
+                <StatusBar style="light" />
+                <Router />
+              </ToastProvider>
+            </AlertProvider>
+          </ModalProvider>
+        </SafeAreaProvider>
+      </QueryClientProvider>
     </MSTProvider>
   );
 }

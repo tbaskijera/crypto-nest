@@ -3202,6 +3202,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@tanstack/query-core@npm:5.51.21":
+  version: 5.51.21
+  resolution: "@tanstack/query-core@npm:5.51.21"
+  checksum: a602e70bfbfa1fa28333be8c1b9ac9c9b97937b236d3997a757079ae04086fe59c2688cb6406fd82dcf9ef07f73e7a4ba1d373040f6cad340e1f64bceafe0e07
+  languageName: node
+  linkType: hard
+
+"@tanstack/react-query@npm:5.51.23":
+  version: 5.51.23
+  resolution: "@tanstack/react-query@npm:5.51.23"
+  dependencies:
+    "@tanstack/query-core": 5.51.21
+  peerDependencies:
+    react: ^18.0.0
+  checksum: d1d8131232430635923694befff9bdabc8d18ca2392789456a28191020d489671577e02ee5b0107e0064fea981c74c99cea3077a4e34cc1ac7438175bd50effe
+  languageName: node
+  linkType: hard
+
 "@types/connect@npm:^3.4.33":
   version: 3.4.38
   resolution: "@types/connect@npm:3.4.38"
@@ -5052,10 +5070,12 @@ __metadata:
     "@solana/spl-token": 0.4.7
     "@solana/spl-token-registry": 0.2.4574
     "@solana/web3.js": 1.94.0
+    "@tanstack/react-query": 5.51.23
     "@types/lodash": ^4.17.6
     "@types/react": ~18.2.45
     bip39: 3.1.0
     buffer: 6.0.3
+    dayjs: 1.11.13
     ed25519-hd-key: ^1.2.0
     eslint: 8.57.0
     eslint-config-expo: ^7.1.2
@@ -5063,6 +5083,7 @@ __metadata:
     eslint-plugin-prettier: ^5.1.3
     ethers: 6.13.1
     expo: ~50.0.17
+    expo-clipboard: ~5.0.1
     expo-font: ~11.10.3
     expo-linear-gradient: ~12.7.2
     expo-random: ~13.6.0
@@ -5070,6 +5091,7 @@ __metadata:
     expo-status-bar: ~1.11.1
     expo-system-ui: ~2.9.4
     lodash: 4.17.21
+    lottie-react-native: ^6.7.2
     mobx: 6.13.1
     mobx-easy-form: 2.0.1
     mobx-react: 9.1.1
@@ -5080,11 +5102,15 @@ __metadata:
     react: 18.2.0
     react-native: 0.73.6
     react-native-collapsible: 1.6.1
+    react-native-get-random-values: 1.11.0
+    react-native-inappbrowser-reborn: 3.7.0
+    react-native-qrcode-svg: 6.1.1
     react-native-reanimated: ~3.6.2
     react-native-safe-area-context: 4.8.2
     react-native-screens: ~3.29.0
-    react-native-svg: 15.3.0
+    react-native-svg: 15.5.0
     readable-stream: ^4.5.2
+    text-encoding-polyfill: 0.6.7
     tweetnacl: ^1.0.3
     typescript: ^5.1.3
     yup: 1.4.0
@@ -5165,6 +5191,13 @@ __metadata:
     es-errors: ^1.3.0
     is-data-view: ^1.0.1
   checksum: 7f0bf8720b7414ca719eedf1846aeec392f2054d7af707c5dc9a753cc77eb8625f067fa901e0b5127e831f9da9056138d894b9c2be79c27a21f6db5824f009c2
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:1.11.13":
+  version: 1.11.13
+  resolution: "dayjs@npm:1.11.13"
+  checksum: f388db88a6aa93956c1f6121644e783391c7b738b73dbc54485578736565c8931bdfba4bb94e9b1535c6e509c97d5deb918bbe1ae6b34358d994de735055cca9
   languageName: node
   linkType: hard
 
@@ -5356,6 +5389,13 @@ __metadata:
   bin:
     detect-libc: ./bin/detect-libc.js
   checksum: daaaed925ffa7889bd91d56e9624e6c8033911bb60f3a50a74a87500680652969dbaab9526d1e200a4c94acf80fc862a22131841145a0a8482d60a99c24f4a3e
+  languageName: node
+  linkType: hard
+
+"dijkstrajs@npm:^1.0.1":
+  version: 1.0.3
+  resolution: "dijkstrajs@npm:1.0.3"
+  checksum: 82ff2c6633f235dd5e6bed04ec62cdfb1f327b4d7534557bd52f18991313f864ee50654543072fff4384a92b643ada4d5452f006b7098dbdfad6c8744a8c9e08
   languageName: node
   linkType: hard
 
@@ -6185,6 +6225,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"expo-clipboard@npm:~5.0.1":
+  version: 5.0.1
+  resolution: "expo-clipboard@npm:5.0.1"
+  peerDependencies:
+    expo: "*"
+  checksum: c4b5c08e025304711aa2d6ce6b5979ba303164fb2c79d62077c4c677a8fbcc5b66817d58cbebf5cc6adcf16d1e03df46f999280b65d562b2bda3e2847f05e070
+  languageName: node
+  linkType: hard
+
 "expo-constants@npm:~15.4.0":
   version: 15.4.6
   resolution: "expo-constants@npm:15.4.6"
@@ -6336,6 +6385,13 @@ __metadata:
   version: 0.1.8
   resolution: "eyes@npm:0.1.8"
   checksum: c31703a92bf36ba75ee8d379ee7985c24ee6149f3a6175f44cec7a05b178c38bce9836d3ca48c9acb0329a960ac2c4b2ead4e60cdd4fe6e8c92cad7cd6913687
+  languageName: node
+  linkType: hard
+
+"fast-base64-decode@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "fast-base64-decode@npm:1.0.0"
+  checksum: 4c59eb1775a7f132333f296c5082476fdcc8f58d023c42ed6d378d2e2da4c328c7a71562f271181a725dd17cdaa8f2805346cc330cdbad3b8e4b9751508bd0a3
   languageName: node
   linkType: hard
 
@@ -8499,6 +8555,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lottie-react-native@npm:^6.7.2":
+  version: 6.7.2
+  resolution: "lottie-react-native@npm:6.7.2"
+  peerDependencies:
+    "@dotlottie/react-player": ^1.6.1
+    "@lottiefiles/react-lottie-player": ^3.5.3
+    react: "*"
+    react-native: ">=0.46"
+    react-native-windows: ">=0.63.x"
+  peerDependenciesMeta:
+    "@dotlottie/react-player":
+      optional: true
+    "@lottiefiles/react-lottie-player":
+      optional: true
+    react-native-windows:
+      optional: true
+  checksum: 8b14ca10f4f0e75505ee5485b47c31db2146baea1634e66f0d485abb8a44ba2019930239970015cedaad627e306828be977b4797256aa2cc143b476ed31585fa
+  languageName: node
+  linkType: hard
+
 "lowercase-keys@npm:^1.0.0":
   version: 1.0.1
   resolution: "lowercase-keys@npm:1.0.1"
@@ -9604,6 +9680,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"opencollective-postinstall@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "opencollective-postinstall@npm:2.0.3"
+  bin:
+    opencollective-postinstall: index.js
+  checksum: 0a68c5cef135e46d11e665d5077398285d1ce5311c948e8327b435791c409744d4a6bb9c55bd6507fb5f2ef34b0ad920565adcdaf974cbdae701aead6f32b396
+  languageName: node
+  linkType: hard
+
 "optionator@npm:^0.9.3":
   version: 0.9.4
   resolution: "optionator@npm:0.9.4"
@@ -9958,6 +10043,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"pngjs@npm:^5.0.0":
+  version: 5.0.0
+  resolution: "pngjs@npm:5.0.0"
+  checksum: 04e912cc45fb9601564e2284efaf0c5d20d131d9b596244f8a6789fc6cdb6b18d2975a6bbf7a001858d7e159d5c5c5dd7b11592e97629b7137f7f5cef05904c8
+  languageName: node
+  linkType: hard
+
 "possible-typed-array-names@npm:^1.0.0":
   version: 1.0.0
   resolution: "possible-typed-array-names@npm:1.0.0"
@@ -10111,7 +10203,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:^15.8.1":
+"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -10159,6 +10251,19 @@ __metadata:
   bin:
     qrcode-terminal: ./bin/qrcode-terminal.js
   checksum: ad146ea1e339e1745402a3ea131631f64f40f0d1ff9cc6bd9c21677feaa1ca6dcd32eadf188fd3febdab8bf6191b3d24d533454903a72543645a72820e4d324c
+  languageName: node
+  linkType: hard
+
+"qrcode@npm:^1.4.4":
+  version: 1.5.4
+  resolution: "qrcode@npm:1.5.4"
+  dependencies:
+    dijkstrajs: ^1.0.1
+    pngjs: ^5.0.0
+    yargs: ^15.3.1
+  bin:
+    qrcode: bin/qrcode
+  checksum: 0a162822e12c02b0333315462fd4ccad22255002130f86806773be7592aec5ef295efaffa3eb148cbf00e290839c7b610f63b0d62a0c5efc5bc52a68f4189684
   languageName: node
   linkType: hard
 
@@ -10261,6 +10366,43 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-native-get-random-values@npm:1.11.0":
+  version: 1.11.0
+  resolution: "react-native-get-random-values@npm:1.11.0"
+  dependencies:
+    fast-base64-decode: ^1.0.0
+  peerDependencies:
+    react-native: ">=0.56"
+  checksum: 07729f70a007f7a3b8f98ebf687c1298ba288b87dd71d8ba385be6b5a377718b27b97547bbe1db6b225b83ee109dfce0b01721e6ed535d53892f3ac81e6bf975
+  languageName: node
+  linkType: hard
+
+"react-native-inappbrowser-reborn@npm:3.7.0":
+  version: 3.7.0
+  resolution: "react-native-inappbrowser-reborn@npm:3.7.0"
+  dependencies:
+    invariant: ^2.2.4
+    opencollective-postinstall: ^2.0.3
+  peerDependencies:
+    react-native: ">=0.56"
+  checksum: b2177addf05cc02a20c5b9b8397c410ccf2fffba6baf1a49fbeb199ceaf4b9d4e959549915c5221f4345f35ec96620ecf25f650a5e268793103d95ffa7e44127
+  languageName: node
+  linkType: hard
+
+"react-native-qrcode-svg@npm:6.1.1":
+  version: 6.1.1
+  resolution: "react-native-qrcode-svg@npm:6.1.1"
+  dependencies:
+    prop-types: ^15.7.2
+    qrcode: ^1.4.4
+  peerDependencies:
+    react: "*"
+    react-native: ">=0.63.4"
+    react-native-svg: ^12.1.0
+  checksum: 4b3f0348c450b09e082d7c0646ad42739cdee1049cd32dc84514c95d96c812f5250c369014dfde61c2017efa01de0cce350bf9c00ebd63d542115d81ea9dfd8b
+  languageName: node
+  linkType: hard
+
 "react-native-reanimated@npm:~3.6.2":
   version: 3.6.3
   resolution: "react-native-reanimated@npm:3.6.3"
@@ -10305,16 +10447,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-native-svg@npm:15.3.0":
-  version: 15.3.0
-  resolution: "react-native-svg@npm:15.3.0"
+"react-native-svg@npm:15.5.0":
+  version: 15.5.0
+  resolution: "react-native-svg@npm:15.5.0"
   dependencies:
     css-select: ^5.1.0
     css-tree: ^1.1.3
+    warn-once: 0.1.1
   peerDependencies:
     react: "*"
     react-native: "*"
-  checksum: e976878361c100639ab4f9bd2cd042f526b28890cc0052139b36a5ebde44cd3b1a54c6dd3b5e391fe10a998767a994748fc6ee3f1b356154418828d12f98d77a
+  checksum: 597c126a0d6feebf0aa0f4d1a03b835d7b2fd9908ddd02f4935a5f824232e61a0ef96c269220639f31b7a64a1cb33dd9343932d3bf379dc75161cba4f6f78349
   languageName: node
   linkType: hard
 
@@ -11779,6 +11922,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"text-encoding-polyfill@npm:0.6.7":
+  version: 0.6.7
+  resolution: "text-encoding-polyfill@npm:0.6.7"
+  checksum: 8e5b45154f3394cd29af01760ec2f728caba7cfc57fbcab60c073dc9c6db479d923efda3e074ae467379c4a0710c45e6427c6917a70da3059876924c190e03ed
+  languageName: node
+  linkType: hard
+
 "text-encoding-utf-8@npm:^1.0.2":
   version: 1.0.2
   resolution: "text-encoding-utf-8@npm:1.0.2"
@@ -12426,7 +12576,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"warn-once@npm:^0.1.0":
+"warn-once@npm:0.1.1, warn-once@npm:^0.1.0":
   version: 0.1.1
   resolution: "warn-once@npm:0.1.1"
   checksum: e6a5a1f5a8dba7744399743d3cfb571db4c3947897875d4962a7c5b1bf2195ab4518c838cb4cea652e71729f21bba2e98dc75686f5fccde0fabbd894e2ed0c0d
@@ -12833,7 +12983,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^15.1.0":
+"yargs@npm:^15.1.0, yargs@npm:^15.3.1":
   version: 15.4.1
   resolution: "yargs@npm:15.4.1"
   dependencies:
