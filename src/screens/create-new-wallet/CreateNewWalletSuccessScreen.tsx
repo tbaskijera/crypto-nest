@@ -1,13 +1,13 @@
-import { useNavigation } from "@react-navigation/native";
 import { Button } from "../../components/Button";
 import { Screen } from "../../components/Screen";
 import { Spacer } from "../../components/Spacer";
 import { Text } from "../../components/Text";
 import { View } from "../../components/View";
+import { useStore } from "../../mobx/utils/useStore";
 
 export const CreateNewWalletSuccessScreen =
   function CreateNewWalletSuccessScreen() {
-    const navigation = useNavigation();
+    const store = useStore();
 
     return (
       <Screen>
@@ -41,12 +41,9 @@ export const CreateNewWalletSuccessScreen =
             alignSelfStretch
             title="Done"
             onPress={() => {
-              navigation.reset({
-                index: 0,
-                routes: [
-                  { name: "MainTab", params: { screen: "WalletScreen" } },
-                ],
-              });
+              store.walletStore.createWallet();
+              store.walletStore.wallet?.generateNewAccount();
+              // At this point we should be automatically navigate to main screen, because initalizeWalletSync will be called, and therefore Router will be rendered
             }}
           />
         </View>

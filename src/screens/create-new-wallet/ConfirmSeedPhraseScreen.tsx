@@ -15,13 +15,14 @@ export const ConfirmSeedPhraseScreen = observer(
     const store = useStore();
     const navigation = useNavigation();
     const alert = useAlert();
-
-    const { seedPhraseInputView } = useSeedPhraseInputView();
-
     const seedPhrase = store.seedPhraseStore.seedPhrase;
     const confirmSeedPhrase = store.seedPhraseStore.confirmedSeedPhrase;
     const isConfirmedSeedPhraseFull =
       store.seedPhraseStore.isConfirmedSeedPhraseFull;
+
+    const { seedPhraseInputView } = useSeedPhraseInputView({
+      confirmSeedPhrase,
+    });
 
     return (
       <Screen>
@@ -53,8 +54,6 @@ export const ConfirmSeedPhraseScreen = observer(
               title="Confirm"
               onPress={() => {
                 if (_.isEqual(seedPhrase, confirmSeedPhrase)) {
-                  store.walletStore.createWallet();
-                  store.walletStore.wallet?.generateNewAccount();
                   navigation.reset({
                     index: 0,
                     routes: [{ name: "CreateNewWalletSuccessScreen" }],

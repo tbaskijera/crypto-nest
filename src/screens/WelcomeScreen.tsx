@@ -8,11 +8,10 @@ import { Screen } from "../components/Screen";
 import { Spacer } from "../components/Spacer";
 import { View } from "../components/View";
 import { styleConstants as C } from "../styleConstants";
-import { useAlert } from "../hooks/useAlert";
 
 export const WelcomeScreen = function WelcomeScreen() {
   const navigation = useNavigation();
-  const alert = useAlert();
+  // const alert = useAlert();
 
   return (
     <Screen withTopInset withBottomInset preventScroll>
@@ -51,10 +50,7 @@ export const WelcomeScreen = function WelcomeScreen() {
                 large
                 style={{ opacity: 0 }}
                 onPress={() => {
-                  alert({
-                    title: "Import using seed phrase",
-                    message: "This feature is not yet available.",
-                  });
+                  navigation.navigate("ImportWalletScreen");
                 }}
               />
             </LinearGradient>
@@ -66,7 +62,7 @@ export const WelcomeScreen = function WelcomeScreen() {
             withGradient
             alignSelfStretch
             title="Create a new wallet"
-            onPress={() => navigation.navigate("CreatePasswordScreen")}
+            // onPress={() => navigation.navigate("CreatePinScreen")}
           />
         </View>
       </View>

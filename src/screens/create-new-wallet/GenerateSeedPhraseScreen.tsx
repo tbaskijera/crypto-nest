@@ -6,10 +6,43 @@ import { Spacer } from "../../components/Spacer";
 import { Text } from "../../components/Text";
 import { View } from "../../components/View";
 import { SeedPhraseView } from "../../features/seed-phrase-view/SeedPhraseView";
+import { useStore } from "../../mobx/utils/useStore";
+import { useEffect } from "react";
+import { generateMnemonic } from "../../crypto/generateMnemonic";
+import { mnemonicToSeed } from "../../crypto/mnemonicToSeed";
 
 export const GenerateSeedPhraseScreen = observer(
   function GenerateSeedPhraseScreen() {
     const navigation = useNavigation();
+
+    const store = useStore();
+
+    const seedPhrase = store.seedPhraseStore.seedPhrase;
+    const setSeedPhrase = store.seedPhraseStore.setSeedPhrase;
+
+    const addWalletDraftMnemonic = store.walletStore.addWalletDraftMnemonic;
+    const addWalletDraftSeed = store.walletStore.addWalletDraftSeed;
+
+    useEffect(() => {
+      const generateSeedPhrase = async () => {
+        const mnemonic = await generateMnemonic();
+        addWalletDraftMnemonic(mnemonic);
+
+        const seed = await mnemonicToSeed(mnemonic);
+        addWalletDraftSeed(seed);
+
+        const splitMnemonic = mnemonic.phrase.split(" ");
+        setSeedPhrase(splitMnemonic);
+
+        console.warn(store.walletStore.walletDraft);
+      };
+      generateSeedPhrase();
+    }, [
+      addWalletDraftMnemonic,
+      addWalletDraftSeed,
+      setSeedPhrase,
+      store.walletStore.walletDraft,
+    ]);
 
     return (
       <Screen>
@@ -32,7 +65,7 @@ export const GenerateSeedPhraseScreen = observer(
 
           <Spacer extraLarge />
 
-          <SeedPhraseView />
+          <SeedPhraseView seedPhrase={seedPhrase} />
 
           <View flex />
 
