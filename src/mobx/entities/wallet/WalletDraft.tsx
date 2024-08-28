@@ -7,13 +7,13 @@ export interface WalletSnapshotIn extends SnapshotIn<typeof WalletDraft> {}
 export interface WalletSnapshotOut extends SnapshotOut<typeof WalletDraft> {}
 
 export const walletDraftInitialState = {
-  password: "",
+  pin: "",
   mnemonic: {} as Mnemonic,
   seed: "",
 };
 
 export const WalletDraft = types.model("WalletDraft", {
-  password: types.string,
+  pin: types.string,
   mnemonic: types.frozen<Mnemonic>(),
   seed: types.string,
 });

@@ -7,6 +7,10 @@ import _ from "lodash";
 import { getEnv } from "../../getEnv";
 import { constants } from "../../../constants";
 import { autorun } from "mobx";
+import {
+  Transaction,
+  transactionInitialState,
+} from "../transaction/Transaction";
 
 export interface WalletStoreInstance extends Instance<typeof WalletStore> {}
 export interface WalletStoreSnapshotIn extends SnapshotIn<typeof WalletStore> {}
@@ -17,10 +21,11 @@ export const WalletStore = types
   .model("WalletStore", {
     wallet: types.maybe(Wallet),
     walletDraft: types.optional(WalletDraft, walletDraftInitialState),
+    transaction: types.optional(Transaction, transactionInitialState),
   })
   .actions((self) => ({
-    addWalletDraftPassword(password: string) {
-      self.walletDraft.password = password;
+    addWalletDraftPin(pin: string) {
+      self.walletDraft.pin = pin;
     },
     addWalletDraftMnemonic(mnemonic: Mnemonic) {
       self.walletDraft.mnemonic = mnemonic;
@@ -31,13 +36,13 @@ export const WalletStore = types
 
     createWallet() {
       if (
-        self.walletDraft.password &&
+        self.walletDraft.pin &&
         self.walletDraft.mnemonic &&
         self.walletDraft.seed
       ) {
         self.wallet = Wallet.create({
           id: _.uniqueId(),
-          password: self.walletDraft.password,
+          pin: self.walletDraft.pin,
           mnemonic: self.walletDraft.mnemonic,
           seed: self.walletDraft.seed,
           accounts: [],
@@ -46,6 +51,11 @@ export const WalletStore = types
 
         return self.wallet;
       }
+    },
+  }))
+  .actions((self) => ({
+    wipeWallet() {
+      self.wallet = undefined;
     },
   }))
   .actions((self) => ({
