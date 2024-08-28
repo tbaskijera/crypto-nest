@@ -9,6 +9,7 @@ import type {
 
 export type MainTabParams = {
   WalletScreen: undefined;
+  TransactionListScreen: undefined;
   SettingsScreen: undefined;
 };
 
@@ -16,10 +17,23 @@ export type MainTabParams = {
 export type TopLevelStackParams = {
   MainTab: NavigatorScreenParams<MainTabParams>;
   WelcomeScreen: undefined;
-  CreatePasswordScreen: undefined;
+  CreatePinScreen: { isImporting: boolean };
   GenerateSeedPhraseScreen: undefined;
   ConfirmSeedPhraseScreen: undefined;
   CreateNewWalletSuccessScreen: undefined;
+  ImportWalletSuccessScreen: undefined;
+  ImportWalletScreen: undefined;
+
+  //
+  ChangePinScreen: undefined;
+  ChangeNetworkScreen: undefined;
+  ReceiveScreen: undefined;
+  SendScreen: undefined;
+  SendAmountScreen: undefined;
+  SendingTransactionScreen: undefined;
+  ShowSeedPhraseScreen: undefined;
+  PrivacyScreen: undefined;
+  LockScreen: undefined;
 };
 
 export type LoginTopTabsParams = {

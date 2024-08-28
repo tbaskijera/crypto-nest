@@ -6,6 +6,7 @@ import { SettingsScreen } from "../screens/SettingsScreen";
 import { WalletScreen } from "../screens/WalletScreen";
 import { styleConstants as C } from "../styleConstants";
 import { MainTabParams } from "./RouterTypes";
+import { TransactionListScreen } from "../screens/TransactionListScreen";
 
 const Tabs = createBottomTabNavigator<MainTabParams>();
 
@@ -18,9 +19,10 @@ export const BottomTabs = observer(function BottomTabs() {
       screenOptions={() => ({
         header: (props) => <Header {...props} />,
         tabBarStyle: {
-          backgroundColor: C.colorDarkAccentLighter,
+          backgroundColor: C.colorDark,
           borderTopWidth: 0,
         },
+        tabBarShowLabel: false,
         tabBarActiveTintColor: C.colorLight,
         tabBarInactiveTintColor: C.colorDarkAccentLight,
         tabBarLabelPosition: "below-icon",
@@ -51,7 +53,19 @@ export const BottomTabs = observer(function BottomTabs() {
         options={{
           title: "Wallet",
           tabBarIcon(props) {
-            return <Icon name="wallet" size={24} color={props.color} />;
+            return <Icon name="wallet" size={32} color={props.color} />;
+          },
+        }}
+      />
+      <Tabs.Screen
+        name="TransactionListScreen"
+        component={TransactionListScreen}
+        options={{
+          title: "Transactions",
+          tabBarIcon(props) {
+            return (
+              <Icon name="swap-horizontal" size={40} color={props.color} />
+            );
           },
         }}
       />
@@ -61,7 +75,7 @@ export const BottomTabs = observer(function BottomTabs() {
         options={{
           title: "Settings",
           tabBarIcon(props) {
-            return <Icon name="cogs" size={24} color={props.color} />;
+            return <Icon name="cogs" size={32} color={props.color} />;
           },
         }}
       />
