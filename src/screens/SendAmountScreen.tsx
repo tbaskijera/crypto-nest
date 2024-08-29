@@ -9,7 +9,7 @@ import { useState } from "react";
 import { TextInput } from "react-native";
 import { styleConstants as C } from "../styleConstants";
 import { useQuery } from "@tanstack/react-query";
-import { getBalance, getSolanaPrice } from "../crypto/createConnection";
+import { getBalance, getSolanaPrice } from "../crypto";
 import { Button } from "../components/Button";
 import { useNavigation } from "@react-navigation/native";
 import { useStore } from "../mobx/utils/useStore";

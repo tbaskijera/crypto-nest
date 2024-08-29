@@ -10,7 +10,7 @@ import { Text } from "../components/Text";
 import { TouchableOpacity } from "../components/TouchableOpacity";
 import { TranscationItem } from "../components/TransactionListItem";
 import { View } from "../components/View";
-import { getHistory } from "../crypto/createConnection";
+import { getHistory } from "../crypto";
 import { AccountSelectionSheet } from "../features/account-selection-sheet/AccountSelectionSheet";
 import { useStore } from "../mobx/utils/useStore";
 
@@ -20,8 +20,8 @@ export const TransactionListScreen = observer(function TransactionListScreen() {
   const [isAccountSelectionSheetVisible, setIsAccountSelectionSheetVisible] =
     useState(false);
 
-  const publicKey =
-    store.walletStore.wallet?.selectedAccount.tokens.master.publicKey;
+  const publicKey = store.walletStore.wallet?.selectedAccount.tokens.master
+    .publicKey as string;
 
   const acc = store.walletStore.wallet?.selectedAccount.title;
 

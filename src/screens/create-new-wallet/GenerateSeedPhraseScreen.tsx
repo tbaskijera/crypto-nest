@@ -8,8 +8,7 @@ import { View } from "../../components/View";
 import { SeedPhraseView } from "../../features/seed-phrase-view/SeedPhraseView";
 import { useStore } from "../../mobx/utils/useStore";
 import { useEffect } from "react";
-import { generateMnemonic } from "../../crypto/generateMnemonic";
-import { mnemonicToSeed } from "../../crypto/mnemonicToSeed";
+import { generateMnemonic, mnemonicToSeed } from "../../crypto";
 
 export const GenerateSeedPhraseScreen = observer(
   function GenerateSeedPhraseScreen() {

@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Button } from "../components/Button";
 import { Screen } from "../components/Screen";
 import { View } from "../components/View";
-import { validateMnemonic } from "../crypto/createConnection";
+import { validateMnemonic } from "../crypto";
 import { useSeedPhraseInputView } from "../features/seed-phrase-view/SeedPhraseInputView";
 import { useStore } from "../mobx/utils/useStore";
 

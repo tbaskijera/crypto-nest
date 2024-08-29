@@ -10,7 +10,7 @@ import { Spinner } from "../components/Spinner";
 import { Text } from "../components/Text";
 import { TouchableOpacity } from "../components/TouchableOpacity";
 import { View } from "../components/View";
-import { getBalance, getSolanaPrice } from "../crypto/createConnection";
+import { getBalance, getSolanaPrice } from "../crypto";
 import { AccountSelectionSheet } from "../features/account-selection-sheet/AccountSelectionSheet";
 import { useStore } from "../mobx/utils/useStore";
 

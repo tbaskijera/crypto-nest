@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useStore } from "../mobx/utils/useStore";
 import { useQuery } from "@tanstack/react-query";
-import { getSolanaPrice, getTransaction } from "../crypto/createConnection";
+import { getSolanaPrice, getTransaction } from "../crypto";
 import { View } from "./View";
 import { Text } from "./Text";
 import { processTransaction } from "./processTransaction";

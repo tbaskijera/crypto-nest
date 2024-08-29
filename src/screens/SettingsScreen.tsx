@@ -7,7 +7,7 @@ import { Screen } from "../components/Screen";
 import { Spacer } from "../components/Spacer";
 import { Text } from "../components/Text";
 import { View } from "../components/View";
-import { requestAirDrop } from "../crypto/createConnection";
+import { requestAirDrop } from "../crypto";
 import { usePromptYesNo } from "../hooks/usePromptYesNo";
 import { useStore } from "../mobx/utils/useStore";
 import { SettingsMenuItem } from "./SettingsMenuItem";

@@ -15,7 +15,7 @@ import { Text } from "../components/Text";
 import { TextInput } from "../components/TextInput";
 import { TouchableInput } from "../components/TouchableInput";
 import { View } from "../components/View";
-import { getBalance } from "../crypto/createConnection";
+import { getBalance } from "../crypto";
 import { AccountSelectionSheet } from "../features/account-selection-sheet/AccountSelectionSheet";
 import { useStore } from "../mobx/utils/useStore";
 import { styleConstants as C } from "../styleConstants";

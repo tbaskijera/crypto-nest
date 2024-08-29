@@ -1,20 +1,23 @@
 {
-    "editor.codeActionsOnSave": {
-      "source.fixAll.eslint": "explicit"
-    },
-    "editor.tabSize": 2,
-    "eslint.format.enable": false,
-    "eslint.validate": [
-      "javascript",
-      "javascriptreact",
-      "typescript",
-      "typescriptreact"
-    ],
-    "typescript.tsdk": "node_modules/typescript/lib",
-    "[javascript][javascriptreact][typescript][typescriptreact]": {
-      "editor.formatOnSave": false
-    },
-    "editor.formatOnSave": true,
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
-  
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "editor.tabSize": 2,
+  "eslint.format.enable": false,
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact"
+  ],
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "[javascript][javascriptreact][typescript][typescriptreact]": {
+    "editor.formatOnSave": false
+  },
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "codesnap.backgroundColor": "#FFFFFF",
+  "codesnap.showWindowControls": false,
+  "codesnap.boxShadow": "rgba(0, 0, 0, 0)",
+  "codesnap.containerPadding": "0em"
+}

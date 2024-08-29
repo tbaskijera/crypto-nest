@@ -3,7 +3,7 @@ import { types } from "mobx-state-tree";
 import type { Instance, SnapshotIn, SnapshotOut } from "mobx-state-tree";
 import { Account } from "../account/Account";
 import _ from "lodash";
-import { accountFromSeed } from "../../../crypto/accountFromSeed";
+import { accountFromSeed } from "../../../crypto";
 
 export interface WalletInstance extends Instance<typeof Wallet> {}
 export interface WalletSnapshotIn extends SnapshotIn<typeof Wallet> {}
