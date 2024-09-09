@@ -29,6 +29,8 @@ export function processTransaction(data: any, publicKey: any) {
   ) {
     const preBalance = preBalances[publicKeyIndex];
     const postBalance = postBalances[publicKeyIndex];
+
+    console.log(preBalance, postBalance);
     amount = (postBalance - preBalance) / 1000000000;
 
     // Determine transaction type based on balance change
