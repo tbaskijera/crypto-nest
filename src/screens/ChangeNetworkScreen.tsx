@@ -4,9 +4,50 @@ import { Screen } from "../components/Screen";
 import { Spacer } from "../components/Spacer";
 import { Text } from "../components/Text";
 import { View } from "../components/View";
+import { useState } from "react";
+import { LinearGradient } from "expo-linear-gradient";
+import { StyleSheet } from "react-native";
+import { styleConstants as C } from "../styleConstants";
+import { TouchableOpacity } from "../components/TouchableOpacity";
+import { useStore } from "../mobx/utils/useStore";
+import { useQuery } from "@tanstack/react-query";
+import { getEnv } from "../mobx/getEnv";
+import { Spinner } from "../components/Spinner";
+import RNRestart from "react-native-restart";
 
 export const ChangeNetworkScreen = observer(function ChangeNetworkScreen() {
-  // const [selectedNetwork, setSelectedNetwork] = useState("Mainnet");
+  const store = useStore();
+  const [newCluster, setNewCluster] = useState<string | null>(null);
+
+  const query = useQuery({
+    queryKey: ["cluster"],
+    queryFn: async () => {
+      const env = getEnv(store.walletStore.wallet);
+      const cluster = (await env.persistence.get("CLUSTER")) ?? "devnet";
+      setNewCluster(cluster);
+      return cluster;
+    },
+  });
+
+  if (query.isError) {
+    return (
+      <Screen>
+        <View centerContent>
+          <Text>Error</Text>
+        </View>
+      </Screen>
+    );
+  }
+
+  if (query.isPending) {
+    return (
+      <Screen>
+        <View centerContent>
+          <Spinner />
+        </View>
+      </Screen>
+    );
+  }
 
   return (
     <Screen>
@@ -15,19 +56,40 @@ export const ChangeNetworkScreen = observer(function ChangeNetworkScreen() {
 
         <Spacer extraLarge />
 
-        <NetworkItem title="Mainnet" isActive={false} onPress={() => {}} />
+        <NetworkItem
+          title="Mainnet"
+          isActive={newCluster === "mainnet"}
+          onPress={() => setNewCluster("mainnet")}
+        />
 
         <Spacer extraLarge />
 
-        <NetworkItem title="Devnet" isActive={false} onPress={() => {}} />
+        <NetworkItem
+          title="Devnet"
+          isActive={newCluster === "devnet"}
+          onPress={() => setNewCluster("devnet")}
+        />
 
         <Spacer extraLarge />
 
-        <NetworkItem title="Testnet" isActive={false} onPress={() => {}} />
+        <NetworkItem
+          title="Testnet"
+          isActive={newCluster === "testnet"}
+          onPress={() => setNewCluster("testnet")}
+        />
 
         <View flex />
 
-        <Button withGradient />
+        <Button
+          withGradient
+          title="Confirm"
+          disabled={query.data === newCluster}
+          onPress={() => {
+            const env = getEnv(store.walletStore.wallet);
+            env.persistence.set("CLUSTER", newCluster);
+            RNRestart.restart();
+          }}
+        />
       </View>
     </Screen>
   );
@@ -43,14 +105,25 @@ const NetworkItem = observer(function NetworkItem({
   onPress: () => void;
 }) {
   return (
-    <View
-      centerContent
-      paddingMedium
-      colorDarkAccentLighter
-      style={{ borderRadius: 30 }}
-    >
-      <Text>{title}</Text>
-    </View>
+    <TouchableOpacity onPress={onPress}>
+      {isActive && (
+        <LinearGradient
+          style={[StyleSheet.absoluteFill, { borderRadius: 30, margin: -1 }]}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
+          locations={[0, 0.8, 1]}
+          colors={[C.colorGradientA, C.colorGradientB, C.colorGradientC]}
+        />
+      )}
+      <View
+        centerContent
+        paddingMedium
+        colorDarkAccentLighter
+        style={{ borderRadius: 30 }}
+      >
+        <Text>{title}</Text>
+      </View>
+    </TouchableOpacity>
   );
 });
 
