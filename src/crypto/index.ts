@@ -7,6 +7,7 @@ import { ethers } from "ethers";
 import { getRandomBytesAsync } from "expo-random";
 import { Buffer } from "buffer";
 import { Mnemonic } from "ethers";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 global.Buffer = require("buffer").Buffer;
 
 export const accountFromSeed = (seed: string, walletIndex: number) => {
@@ -19,8 +20,14 @@ export const accountFromSeed = (seed: string, walletIndex: number) => {
   return acc;
 };
 
-export const createConnection = () => {
-  return new solanaWeb3.Connection(solanaWeb3.clusterApiUrl("devnet"));
+export const createConnection = async () => {
+  const cluster = (await AsyncStorage.getItem(
+    constants.ASYNC_STORAGE_KEYS.CLUSTER,
+  )) as solanaWeb3.Cluster;
+
+  return new solanaWeb3.Connection(
+    solanaWeb3.clusterApiUrl(cluster ?? "devnet"),
+  );
 };
 
 export const deriveSeed = (
@@ -39,7 +46,7 @@ export const generateMnemonic = async () => {
 };
 
 export const getBalance = async (publicKey: string) => {
-  const connection = createConnection();
+  const connection = await createConnection();
   const _publicKey = publicKeyFromString(publicKey);
 
   const lamports = await connection.getBalance(_publicKey).catch((err) => {
@@ -54,7 +61,7 @@ export const getHistory = async (
   publicKeyString: string,
   options = { limit: 20 },
 ) => {
-  const connection = createConnection();
+  const connection = await createConnection();
   const history = await connection.getSignaturesForAddress(
     publicKeyFromString(publicKeyString),
     options,
@@ -75,7 +82,7 @@ export const getSolanaPrice = async () => {
 };
 
 export const getTransaction = async (signature: any) => {
-  const connection = createConnection();
+  const connection = await createConnection();
   const transaction = await connection.getTransaction(signature, {
     maxSupportedTransactionVersion: 0,
   });
@@ -100,7 +107,7 @@ export const makeTransaction = async ({
     }),
   );
 
-  const connection = createConnection();
+  const connection = await createConnection();
   const signature = await solanaWeb3.sendAndConfirmTransaction(
     connection,
     transaction,
@@ -119,7 +126,7 @@ export const publicKeyFromString = (publicKeyString: string) => {
 };
 
 export const requestAirDrop = async (publicKeyString: string) => {
-  const connection = createConnection();
+  const connection = await createConnection();
 
   const airdropSignature = await connection.requestAirdrop(
     publicKeyFromString(publicKeyString),
