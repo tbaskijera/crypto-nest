@@ -1,19 +1,18 @@
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { StatusBar } from "expo-status-bar";
 import * as SystemUI from "expo-system-ui";
 import { useEffect, useRef, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { ModalProvider } from "./src/components/ModalProvider";
-import { View } from "./src/components/View";
-import { Router } from "./src/navigation/Router";
-import { styleConstants as C } from "./src/styleConstants";
 import { AlertProvider } from "./src/components/alert-provider/AlertProvider";
+import { ModalProvider } from "./src/components/ModalProvider";
+import { ToastProvider } from "./src/components/toast/ToastProvider";
+import { View } from "./src/components/View";
+import { initialize } from "./src/initialize";
 import { MSTProvider } from "./src/mobx/MSTProvider";
 import { RootStoreInstance } from "./src/mobx/RootStore";
 import { useMSTFastRefresh } from "./src/mobx/useMSTFastRefresh";
-import { reloadIfStoreInitializedTwice } from "./src/mobx/reloadIfStoreInitializedTwice";
-import { initialize } from "./src/initialize";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ToastProvider } from "./src/components/toast/ToastProvider";
+import { Router } from "./src/navigation/Router";
+import { styleConstants as C } from "./src/styleConstants";
 
 export default function App() {
   const [isAppReady, setIsAppReady] = useState(false);
@@ -23,8 +22,6 @@ export default function App() {
   useMSTFastRefresh(store);
 
   useEffect(() => {
-    reloadIfStoreInitializedTwice(store.current);
-
     const init = async () => {
       const context = await initialize();
       store.current = context.store;
