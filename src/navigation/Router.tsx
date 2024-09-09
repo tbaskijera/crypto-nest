@@ -1,9 +1,6 @@
 import type { NavigationContainerProps } from "@react-navigation/native";
 import { NavigationContainer } from "@react-navigation/native";
-import {
-  NativeStackNavigationOptions,
-  createNativeStackNavigator,
-} from "@react-navigation/native-stack";
+import { NativeStackNavigationOptions, createNativeStackNavigator } from "@react-navigation/native-stack";
 import React, { Fragment } from "react";
 import { Header } from "../components/Header";
 import { WelcomeScreen } from "../screens/WelcomeScreen";
@@ -27,6 +24,8 @@ import { SendingTransactionScreen } from "../screens/SendingTransactionScreen";
 import { ShowSeedPhraseScreen } from "../screens/ShowSeedPhraseScreen";
 import { ImportWalletScreen } from "../screens/ImportWalletScreen";
 import { ImportWalletSuccessScreen } from "../screens/ImportWalletSuccessScreen";
+import { ChangeAccountNameScreen } from "../screens/ChangeAccountNameScreen";
+import { QrCodeScanScreen } from "../screens/QrCodeScanScreen";
 
 export interface RouterProps {
   navigationContainerProps: Partial<NavigationContainerProps>;
@@ -51,39 +50,17 @@ export const Router = observer(function Router() {
         <Stack.Navigator screenOptions={screenOptions}>
           {!hasActiveWallet ? (
             <Fragment>
-              <Stack.Screen
-                name={"WelcomeScreen"}
-                component={WelcomeScreen}
-                options={{ headerShown: false }}
-              />
+              <Stack.Screen name={"WelcomeScreen"} component={WelcomeScreen} options={{ headerShown: false }} />
 
-              <Stack.Screen
-                name="CreatePinScreen"
-                component={CreatePinScreen}
-              />
-              <Stack.Screen
-                name="GenerateSeedPhraseScreen"
-                component={GenerateSeedPhraseScreen}
-              />
-              <Stack.Screen
-                name="ConfirmSeedPhraseScreen"
-                component={ConfirmSeedPhraseScreen}
-              />
+              <Stack.Screen name="CreatePinScreen" component={CreatePinScreen} />
+              <Stack.Screen name="GenerateSeedPhraseScreen" component={GenerateSeedPhraseScreen} />
+              <Stack.Screen name="ConfirmSeedPhraseScreen" component={ConfirmSeedPhraseScreen} />
 
-              <Stack.Screen
-                name="CreateNewWalletSuccessScreen"
-                component={CreateNewWalletSuccessScreen}
-              />
+              <Stack.Screen name="CreateNewWalletSuccessScreen" component={CreateNewWalletSuccessScreen} />
 
-              <Stack.Screen
-                name="ImportWalletScreen"
-                component={ImportWalletScreen}
-              />
+              <Stack.Screen name="ImportWalletScreen" component={ImportWalletScreen} />
 
-              <Stack.Screen
-                name="ImportWalletSuccessScreen"
-                component={ImportWalletSuccessScreen}
-              />
+              <Stack.Screen name="ImportWalletSuccessScreen" component={ImportWalletSuccessScreen} />
             </Fragment>
           ) : (
             <Fragment>
@@ -91,29 +68,16 @@ export const Router = observer(function Router() {
                 {() => <BottomTabs />}
               </Stack.Screen>
 
-              <Stack.Screen
-                name="ChangePinScreen"
-                component={ChangePinScreen}
-              />
-              <Stack.Screen
-                name="ChangeNetworkScreen"
-                component={ChangeNetworkScreen}
-              />
+              <Stack.Screen name="ChangeAccountNameScreen" component={ChangeAccountNameScreen} />
+
+              <Stack.Screen name="ChangePinScreen" component={ChangePinScreen} />
+              <Stack.Screen name="ChangeNetworkScreen" component={ChangeNetworkScreen} />
               <Stack.Screen name="ReceiveScreen" component={ReceiveScreen} />
               <Stack.Screen name="SendScreen" component={SendScreen} />
-              <Stack.Screen
-                name="SendAmountScreen"
-                component={SendAmountScreen}
-              />
-              <Stack.Screen
-                name="SendingTransactionScreen"
-                component={SendingTransactionScreen}
-                options={{ headerShown: false }}
-              />
-              <Stack.Screen
-                name="ShowSeedPhraseScreen"
-                component={ShowSeedPhraseScreen}
-              />
+              <Stack.Screen name="SendAmountScreen" component={SendAmountScreen} />
+              <Stack.Screen name="SendingTransactionScreen" component={SendingTransactionScreen} options={{ headerShown: false }} />
+              <Stack.Screen name="ShowSeedPhraseScreen" component={ShowSeedPhraseScreen} />
+              <Stack.Screen name="QrCodeScanScreen" component={QrCodeScanScreen} />
               <Stack.Screen
                 name="PrivacyScreen"
                 component={PrivacyScreen}
@@ -130,12 +94,6 @@ export const Router = observer(function Router() {
                   headerShown: false,
                 }}
               />
-
-              {/* <Stack.Screen
-              name="WelcomeScreen"
-              component={WelcomeScreen}
-              options={{ headerShown: false }}
-            /> */}
             </Fragment>
           )}
         </Stack.Navigator>

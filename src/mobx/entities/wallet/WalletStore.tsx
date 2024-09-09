@@ -11,6 +11,7 @@ import {
   Transaction,
   transactionInitialState,
 } from "../transaction/Transaction";
+import { getRoot } from "../../utils/getRoot";
 
 export interface WalletStoreInstance extends Instance<typeof WalletStore> {}
 export interface WalletStoreSnapshotIn extends SnapshotIn<typeof WalletStore> {}
@@ -55,6 +56,9 @@ export const WalletStore = types
   }))
   .actions((self) => ({
     wipeWallet() {
+      const root = getRoot(self);
+
+      root.seedPhraseStore.wipeSeedPhrase();
       self.wallet = undefined;
     },
   }))
