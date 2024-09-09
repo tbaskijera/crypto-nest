@@ -1,0 +1,8 @@
+{
+  "overrides": [
+    {
+      "files": "src/navigation/Router.tsx",
+      "options": { "printWidth": 240 }
+    }
+  ]
+}
