@@ -7,6 +7,12 @@ import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
+import com.facebook.react.bridge.Arguments;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
+import com.facebook.react.bridge.WritableMap;
+import com.facebook.react.modules.core.DeviceEventManagerModule;
 
 import expo.modules.ReactActivityDelegateWrapper
 
@@ -58,4 +64,15 @@ class MainActivity : ReactActivity() {
       // because it's doing more than [Activity.moveTaskToBack] in fact.
       super.invokeDefaultOnBackPressed()
   }
+  
+  override fun onWindowFocusChanged(hasFocus: Boolean) {
+    val reactContext = reactInstanceManager.currentReactContext
+    val params = Arguments.createMap().apply {
+        putString("event", if (hasFocus) "active" else "inactive")
+    }
+
+    reactContext?.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)
+        ?.emit("ActivityStateChange", params)
+  }
+
 }
