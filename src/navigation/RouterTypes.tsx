@@ -24,7 +24,7 @@ export type TopLevelStackParams = {
   ImportWalletSuccessScreen: undefined;
   ImportWalletScreen: undefined;
 
-  //
+  ChangeAccountNameScreen: { accountIndex: number };
   ChangePinScreen: undefined;
   ChangeNetworkScreen: undefined;
   ReceiveScreen: undefined;
@@ -34,30 +34,19 @@ export type TopLevelStackParams = {
   ShowSeedPhraseScreen: undefined;
   PrivacyScreen: undefined;
   LockScreen: undefined;
-};
-
-export type LoginTopTabsParams = {
-  LoginWithEmailScreen: undefined;
-  LoginWithPhoneNumberScreen: undefined;
-};
-
-export type StoreTopTabsParams = {
-  StoreListScreen: undefined;
-  StoreMapScreen: undefined;
+  QrCodeScanScreen: { onScan: (data: string) => void };
 };
 
 // End navigator params definitions
 // --------------------------------------------
 
-export type ScreenName = keyof TopLevelStackParams | keyof StoreTopTabsParams;
+export type ScreenName = keyof TopLevelStackParams;
 
 // Param prop getter
 export type RouteProp<ScreenName_ extends ScreenName> =
   ScreenName_ extends keyof TopLevelStackParams
     ? RNRouteProp<TopLevelStackParams, ScreenName_>
-    : ScreenName_ extends keyof StoreTopTabsParams
-      ? RNRouteProp<StoreTopTabsParams, ScreenName_>
-      : never;
+    : never;
 
 // Type navigation globally
 declare global {
