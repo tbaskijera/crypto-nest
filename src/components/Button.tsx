@@ -113,7 +113,7 @@ export const Button = forwardRef<TouchableOpacity, ButtonProps>(
       if (large) style.fontSize = C.fontSizeMedium;
       else style.fontSize = C.fontSizeMedium;
 
-      if (disabled) style.color = C.colorDarkAccentLighter;
+      if (disabled) style.color = C.colorDark;
       else if (outline || transparent) {
         if (colorTheme) style.color = C.colorTheme;
         else if (colorLight) style.color = C.colorLight;
