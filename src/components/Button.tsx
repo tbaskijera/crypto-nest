@@ -127,7 +127,6 @@ export const Button = forwardRef<TouchableOpacity, ButtonProps>(
       } else {
         style.color = C.colorDark;
       }
-      style.color = C.colorDark;
 
       return style;
     };

@@ -134,7 +134,7 @@ export const ToastItem = observer(function ToastItem({
               <Spacer />
             </>
           )}
-          <Text style={S.flex} sizeSmall weightRegular>
+          <Text colorDarkAccent style={S.flex} sizeSmall weightRegular>
             {toast.message}
           </Text>
           <Spacer small />

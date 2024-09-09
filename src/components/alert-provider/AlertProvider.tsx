@@ -2,16 +2,15 @@ import React, { useCallback, useState } from "react";
 import { Pressable, ScrollView, StyleSheet } from "react-native";
 
 import type { AlertButton } from "react-native";
+import { styleConstants as C } from "../../styleConstants";
 import { shadow } from "../../utils/shadow";
 import { Button } from "../Button";
-import { Icon } from "../Icon";
 import { Modal } from "../Modal";
 import { Spacer } from "../Spacer";
 import { Text } from "../Text";
 import { View } from "../View";
 import type { AlertContextType, AlertType } from "./AlertContext";
 import { AlertContext } from "./AlertContext";
-import { styleConstants as C } from "../../styleConstants";
 
 const defaultOptions = {
   cancelable: false,
@@ -77,7 +76,7 @@ export function AlertProvider({ children, ...otherProps }: AlertProviderProps) {
 
   const contextValue = { alertVisible, setAlertVisible, alert };
 
-  const { title, message, type, buttons, options } = alertParams;
+  const { title, message, buttons, options } = alertParams;
 
   const { onDismiss, cancelable } = options;
 
@@ -96,6 +95,7 @@ export function AlertProvider({ children, ...otherProps }: AlertProviderProps) {
           title={button.text}
           // withGradient
           outline={button.style === "cancel"}
+          colorTheme={button.style === "cancel"}
           medium
           onPress={() => {
             setAlertVisible(false);
@@ -123,8 +123,8 @@ export function AlertProvider({ children, ...otherProps }: AlertProviderProps) {
                 <ScrollView showsVerticalScrollIndicator={false}>
                   {!!title && (
                     <View alignItemsCenter justifyContentCenter>
-                      {type === "default" ? (
-                        <Icon name="abacus" color="red" size={24} />
+                      {/* {type === "default" ? (
+                        <Icon name="close" color="red" size={24} />
                       ) : type === "success" ? (
                         <Icon name="abacus" color="red" size={24} />
                       ) : type === "warning" ? (
@@ -134,7 +134,7 @@ export function AlertProvider({ children, ...otherProps }: AlertProviderProps) {
                       ) : (
                         <Icon name="abacus" size={24} color="red" />
                       )}
-                      <Spacer extraLarge />
+                      <Spacer extraLarge /> */}
                       <Text sizeLarge weightSemiBold alignCenter>
                         {title}
                       </Text>
@@ -161,9 +161,8 @@ export function AlertProvider({ children, ...otherProps }: AlertProviderProps) {
                   {buttonsRender.length === 0 ? (
                     <Button
                       withGradient
-                      medium
                       flex
-                      title="U redu"
+                      title="I understand"
                       onPress={() => {
                         setAlertVisible(false);
                       }}

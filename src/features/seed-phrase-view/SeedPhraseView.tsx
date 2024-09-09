@@ -11,6 +11,7 @@ export const SeedPhraseView = observer(function SeedPhraseView({
 }: {
   seedPhrase: string[];
 }) {
+  console.warn(seedPhrase);
   return (
     <View alignSelfStretch>
       <View flex>
