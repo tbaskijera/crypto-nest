@@ -35,6 +35,10 @@
     <string>1</string>
     <key>LSRequiresIPhoneOS</key>
     <true/>
+    <key>NSCameraUsageDescription</key>
+    <string>Camera permission is required for scanning QR code</string>
+    <key>NSFaceIDUsageDescription</key>
+    <string>Face ID permission is required for authentication</string>
     <key>NSAppTransportSecurity</key>
     <dict>
       <key>NSAllowsArbitraryLoads</key>
