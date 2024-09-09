@@ -34,4 +34,8 @@ export const SeedPhraseStore = types
     setConfirmedSeedPhrase(index: number, word: string) {
       self.confirmedSeedPhrase[index] = word;
     },
+
+    wipeSeedPhrase() {
+      self.seedPhrase = cast(Array(12).fill(""));
+    },
   }));

@@ -1,9 +1,11 @@
 import { Mnemonic } from "ethers";
-import { types } from "mobx-state-tree";
-import type { Instance, SnapshotIn, SnapshotOut } from "mobx-state-tree";
-import { Account } from "../account/Account";
 import _ from "lodash";
-import { accountFromSeed } from "../../../crypto";
+import type { Instance, SnapshotIn, SnapshotOut } from "mobx-state-tree";
+import { cast, flow, types } from "mobx-state-tree";
+import { accountFromSeed, getBalance } from "../../../crypto";
+import { assert } from "../../../utils/assert";
+import { Account } from "../account/Account";
+import { getEnv } from "../../getEnv";
 
 export interface WalletInstance extends Instance<typeof Wallet> {}
 export interface WalletSnapshotIn extends SnapshotIn<typeof Wallet> {}
@@ -17,21 +19,31 @@ export const Wallet = types
     seed: types.string,
     accounts: types.array(Account),
     selectedAccountIndex: types.optional(types.number, 0),
-    activeCluter: types.optional(types.string, "devnet"),
+    lastUsedIndex: types.optional(types.number, 0),
   })
   .views((self) => ({
     get accountCount() {
       return self.accounts.length;
     },
 
+    accountByIndex(index: number) {
+      return self.accounts.find((account) => account.index === index);
+    },
+
     get selectedAccount() {
-      return self.accounts[self.selectedAccountIndex];
+      return self.accounts.find(
+        (account) => account.index === self.selectedAccountIndex,
+      );
     },
 
     getIndexByPublicKey(publicKey: string) {
       return self.accounts.findIndex(
         (account) => account.tokens.master.publicKey === publicKey,
       );
+    },
+    get activeCluster() {
+      const env = getEnv(self);
+      return env.persistence.get("CLUSTER");
     },
   }))
   .actions((self) => ({
@@ -43,7 +55,7 @@ export const Wallet = types
     generateNewAccount() {
       const account = {
         id: _.uniqueId(),
-        index: self.accountCount,
+        index: self.lastUsedIndex,
         title: `Account ${self.accounts.length + 1}`,
         derivationPath: "bip44Change",
         default: self.accounts.length === 0,
@@ -60,35 +72,56 @@ export const Wallet = types
       if (keyPair) {
         account.tokens.master.publicKey = keyPair.publicKey.toString();
         self.accounts.push(account);
+        self.lastUsedIndex += 1;
         if (self.accountCount === 0) self.selectAccount(self.accountCount);
-        return true;
       } else {
         console.log("Error generating key pair");
-        return false;
+        return;
       }
-    },
 
-    // generateNewAccountFromSeed() {
-    //   const seed = self.seed;
-    // },
+      return account;
+    },
 
     renameAccount(index: number, title: string) {
       self.accounts[index].title = title;
     },
 
     deleteAccount(index: number) {
-      self.accounts.splice(index, 1);
+      self.accounts = cast(
+        self.accounts.filter((account) => account.index !== index),
+      );
       if (self.selectedAccountIndex === index) {
-        self.selectedAccountIndex = 0;
+        const lowestIndexAccount = self.accounts.reduce((acc, curr) =>
+          acc.index < curr.index ? acc : curr,
+        );
+        self.selectedAccountIndex = lowestIndexAccount.index;
       }
-    },
-
-    setActiveCluster(cluster: "devnet" | "testnet" | "mainnet") {
-      self.activeCluter = cluster;
     },
   }))
   .actions((self) => ({
     changePin: (pin: string) => {
       self.pin = pin;
     },
+
+    generateMultipleAccounts: flow(function* generateMultipleAccounts(
+      count: number,
+    ) {
+      for (let i = 0; i < count; i++) {
+        const generatedAccount = self.generateNewAccount();
+        assert(generatedAccount, "Account not generated");
+
+        const generatedAccountBalance = yield getBalance(
+          generatedAccount.tokens.master.publicKey,
+        );
+        console.log(
+          generatedAccount.tokens.master.publicKey,
+          " ",
+          generatedAccountBalance,
+        );
+
+        if (generatedAccountBalance === 0) {
+          self.deleteAccount(generatedAccount.index);
+        }
+      }
+    }),
   }));
