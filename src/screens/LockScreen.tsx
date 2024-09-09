@@ -15,12 +15,16 @@ import { TouchableOpacity } from "../components/TouchableOpacity";
 import { View } from "../components/View";
 import { useStore } from "../mobx/utils/useStore";
 import { styleConstants as C } from "../styleConstants";
+import * as LocalAuthentication from "expo-local-authentication";
+import { Modal } from "../components/Modal";
 
 export const LockScreen = observer(function LockScreen() {
   const store = useStore();
   const navigation = useNavigation();
 
   const [pin, setPin] = useState("");
+  const [isBiometricsModalVisible, setIsBiometricsModalVisible] =
+    useState(false);
 
   const userPin = store.walletStore.wallet?.pin;
   const shakeAnimation = useSharedValue(0);
@@ -50,6 +54,7 @@ export const LockScreen = observer(function LockScreen() {
 
   return (
     <Screen withTopInset withBottomInset>
+      {isBiometricsModalVisible && <BiometricModal />}
       <View flex paddingVerticalExtraLarge paddingHorizontalExtraLarge>
         <Spacer extraLarge />
 
@@ -157,7 +162,7 @@ export const LockScreen = observer(function LockScreen() {
               alignItems: "center",
               minWidth: 40,
             }}
-            onPress={() => setPin((prev) => prev.slice(0, -1))}
+            onPress={() => setIsBiometricsModalVisible(true)}
           >
             <Icon name="face-recognition" size={20} />
           </TouchableOpacity>
@@ -179,7 +184,7 @@ export const LockScreen = observer(function LockScreen() {
               alignItems: "center",
               minWidth: 40,
             }}
-            onPress={() => setPin("")}
+            onPress={() => setPin((prev) => prev.slice(0, -1))}
           >
             <Icon name="backspace" size={20} />
           </TouchableOpacity>
@@ -189,5 +194,46 @@ export const LockScreen = observer(function LockScreen() {
         <Spacer />
       </View>
     </Screen>
+  );
+});
+
+export const BiometricModal = observer(function BiometricModal() {
+  const navigation = useNavigation();
+  useEffect(() => {
+    const authenticate = async () => {
+      LocalAuthentication.hasHardwareAsync().then((hasHardware) => {
+        console.log("hasHardware", hasHardware);
+      });
+      LocalAuthentication.supportedAuthenticationTypesAsync().then((types) => {
+        console.log("types", types);
+      });
+      LocalAuthentication.isEnrolledAsync().then((isEnrolled) => {
+        console.log("isEnrolled", isEnrolled);
+      });
+
+      const result = await LocalAuthentication.authenticateAsync({
+        promptMessage: "Authenticate",
+        cancelLabel: "Cancel",
+        disableDeviceFallback: true,
+        fallbackLabel: "Use Backup",
+      });
+
+      console.warn("result", result);
+
+      if (result.success) {
+        navigation.dispatch(StackActions.pop(2));
+      }
+    };
+    authenticate();
+  }, [navigation]);
+
+  return (
+    <Modal>
+      <View
+        flex
+        paddingExtraLarge
+        style={{ backgroundColor: C.colorBackdrop }}
+      />
+    </Modal>
   );
 });
