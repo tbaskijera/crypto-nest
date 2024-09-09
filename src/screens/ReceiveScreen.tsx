@@ -7,12 +7,22 @@ import "text-encoding-polyfill";
 import { Spacer } from "../components/Spacer";
 import { Button } from "../components/Button";
 import * as Clipboard from "expo-clipboard";
+import { useStore } from "../mobx/utils/useStore";
+import { assert } from "../utils/assert";
 
 export const ReceiveScreen = observer(function ReceiveScreen() {
-  const keyValue = "8C816CzyG8KzEnbkyvacYP1DGceqXM8TMsbiUNsDaskV";
+  const store = useStore();
+
+  assert(store.walletStore.wallet, "Wallet not found");
+  assert(store.walletStore.wallet.selectedAccount, "Account not found");
+
+  const publicKey =
+    store.walletStore.wallet.selectedAccount.tokens.master.publicKey;
+
+  assert(publicKey);
 
   const copyToClipboard = async () => {
-    await Clipboard.setStringAsync(keyValue);
+    await Clipboard.setStringAsync(publicKey);
   };
 
   return (
@@ -30,12 +40,12 @@ export const ReceiveScreen = observer(function ReceiveScreen() {
           alignSelfCenter
           style={{ borderWidth: 10, borderColor: "white", borderRadius: 12 }}
         >
-          <QRCode size={200} value={keyValue} />
+          <QRCode size={200} value={publicKey} />
         </View>
 
-        <Spacer large />
+        <Spacer extraLarge />
 
-        <Text alignCenter>{keyValue}</Text>
+        <Text alignCenter>{publicKey}</Text>
 
         <View flex />
 

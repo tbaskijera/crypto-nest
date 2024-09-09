@@ -13,12 +13,16 @@ import { View } from "../components/View";
 import { getHistory } from "../crypto";
 import { AccountSelectionSheet } from "../features/account-selection-sheet/AccountSelectionSheet";
 import { useStore } from "../mobx/utils/useStore";
+import { assert } from "../utils/assert";
 
 export const TransactionListScreen = observer(function TransactionListScreen() {
   const store = useStore();
 
   const [isAccountSelectionSheetVisible, setIsAccountSelectionSheetVisible] =
     useState(false);
+
+  assert(store.walletStore.wallet, "Wallet not found");
+  assert(store.walletStore.wallet.selectedAccount, "Account not found");
 
   const publicKey = store.walletStore.wallet?.selectedAccount.tokens.master
     .publicKey as string;

@@ -33,12 +33,15 @@ export const SettingsScreen = observer(function SettingsScreen() {
 
   const [isLoadingModalVisible, setIsLoadingModalVisible] = useState(false);
 
+  assert(store.walletStore.wallet, "Wallet not found");
+  assert(store.walletStore.wallet.selectedAccount, "Account not found");
+
   const publicKey =
-    store.walletStore.wallet?.selectedAccount.tokens.master.publicKey;
+    store.walletStore.wallet.selectedAccount.tokens.master.publicKey;
 
   assert(publicKey);
 
-  const acc = store.walletStore.wallet?.selectedAccount.title;
+  const acc = store.walletStore.wallet.selectedAccount.title;
 
   return (
     <Screen>

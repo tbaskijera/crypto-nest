@@ -13,6 +13,10 @@ import { View } from "../components/View";
 import { getBalance, getSolanaPrice } from "../crypto";
 import { AccountSelectionSheet } from "../features/account-selection-sheet/AccountSelectionSheet";
 import { useStore } from "../mobx/utils/useStore";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { assert } from "../utils/assert";
+
+AsyncStorage.clear();
 
 export const WalletScreen = observer(function WalletScreen() {
   const [isAccountSelectionSheetVisible, setIsAccountSelectionSheetVisible] =
@@ -20,7 +24,13 @@ export const WalletScreen = observer(function WalletScreen() {
   const store = useStore();
 
   const navigation = useNavigation();
+
+  assert(store.walletStore.wallet, "Wallet not found");
+  assert(store.walletStore.wallet.selectedAccount, "Account not found");
+
   const acc = store.walletStore.wallet?.selectedAccount.title;
+
+  console.warn(JSON.stringify(store.walletStore.wallet?.accounts));
 
   const priceQuery = useQuery({
     queryKey: ["solanaPrice"],
@@ -31,9 +41,11 @@ export const WalletScreen = observer(function WalletScreen() {
   const balanceQuery = useQuery({
     queryKey: ["balance", { acc }],
     queryFn: async () => {
+      assert(store.walletStore.wallet, "Wallet not found");
+      assert(store.walletStore.wallet.selectedAccount, "Account not found");
+      const account = store.walletStore.wallet.selectedAccount;
       const balance = await getBalance(
-        store.walletStore.wallet?.selectedAccount.tokens.master
-          .publicKey as string,
+        account.tokens.master.publicKey as string,
       );
       console.warn(balance);
       return balance;

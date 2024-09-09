@@ -100,7 +100,14 @@ export const SendScreen = observer(function SendScreen() {
             <IconButton
               iconName="qrcode-scan"
               iconColor={C.colorLight}
-              // onPress={() => setIsOldPinVisible(!isOldPinVisible)}
+              onPress={() => {
+                store.uiStore.setIsRequestingPermissions(true);
+                navigation.navigate("QrCodeScanScreen", {
+                  onScan: (data: string) => {
+                    receiverAddress.actions.onChange(data);
+                  },
+                });
+              }}
             />
           )}
         />
@@ -119,51 +126,3 @@ export const SendScreen = observer(function SendScreen() {
     </Screen>
   );
 });
-
-// const truncateText = (text: string) => {
-//   return text.length > 25 ? text.substring(0, 25) + "..." : text;
-// };
-
-{
-  /* <Button
-          onPress={async () => {
-            const currentAccount = store.walletStore.wallet?.accounts[0];
-
-            const parsedAccount = accountFromSeed(
-              store.walletStore.wallet?.seed,
-              currentAccount?.index,
-            );
-
-            if (!parsedAccount) {
-              console.warn("No account found");
-              return;
-            }
-
-            console.warn("Parsed account: ", parsedAccount);
-
-            const transaction = new solanaWeb3.Transaction().add(
-              solanaWeb3.SystemProgram.transfer({
-                fromPubkey: publicKeyFromString(
-                  parsedAccount.publicKey.toString(),
-                ),
-                toPubkey: publicKeyFromString(
-                  "BWTgVwbHrWdyCXMPThEVWnf1thxmoC1vkXQTxKmcwVFi",
-                ),
-                lamports: 0.2 * constants.LAMPORTS_PER_SOL,
-              }),
-            );
-
-            console.warn("Transaction: ", transaction);
-
-            const connection = createConnection();
-
-            console.warn("Connection: ", connection);
-            const signature = await solanaWeb3.sendAndConfirmTransaction(
-              connection,
-              transaction,
-              [parsedAccount],
-            );
-            console.warn("SIGNATURE", signature); */
-}
-// }}
-// />

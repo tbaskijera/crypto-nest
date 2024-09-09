@@ -18,6 +18,8 @@ import { Icon } from "../../components/Icon";
 import { TouchableOpacity } from "../../components/TouchableOpacity";
 import { Fragment, useState } from "react";
 import { usePromptYesNo } from "../../hooks/usePromptYesNo";
+import { useNavigation } from "@react-navigation/native";
+import { assert } from "../../utils/assert";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
@@ -39,18 +41,24 @@ export const AccountSelectionSheet = observer(function AccountSelectionSheet({
   setPickerOption,
 }: AccountSelectionSheetProps) {
   const store = useStore();
+  const navigation = useNavigation();
   const insets = useSafeAreaInsets();
   const promptYesNo = usePromptYesNo();
 
+  assert(store.walletStore.wallet, "Wallet not found");
+  assert(store.walletStore.wallet.selectedAccount, "Account not found");
+
   const onDismiss = () => {
     setIsVisible(false);
-    // store.walletStore.wallet?.selectAccount(selectedAccount);
+    store.walletStore.wallet?.selectAccount(selectedAccount);
   };
 
   const accounts = store.walletStore.wallet?.accounts;
   const [selectedAccount, setSelectedAccount] = useState(
-    store.walletStore.wallet?.selectedAccount.index,
+    store.walletStore.wallet.selectedAccount.index,
   );
+
+  console.warn(selectedAccount);
 
   return (
     <Modal>
@@ -81,7 +89,7 @@ export const AccountSelectionSheet = observer(function AccountSelectionSheet({
                       onPress={() => {
                         if (editMode) setSelectedAccount(item.index);
                         else {
-                          // setPickerOption(item.tokens.master.publicKey);
+                          setPickerOption?.(item.tokens.master.publicKey);
                           setIsVisible(false);
                         }
                       }}
@@ -97,11 +105,17 @@ export const AccountSelectionSheet = observer(function AccountSelectionSheet({
                     {editMode && (
                       <Fragment>
                         <Spacer extraLarge />
-                        {/* <IconButton
+                        <IconButton
                           iconName="account-edit-outline"
                           iconSize={24}
+                          onPress={() => {
+                            navigation.navigate("ChangeAccountNameScreen", {
+                              accountIndex: item.index,
+                            });
+                            setIsVisible(false);
+                          }}
                         />
-                        <Spacer small /> */}
+                        <Spacer small />
                         <IconButton
                           iconName="trash-can-outline"
                           iconSize={24}

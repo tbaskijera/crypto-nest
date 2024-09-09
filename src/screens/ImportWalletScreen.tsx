@@ -6,9 +6,12 @@ import { View } from "../components/View";
 import { validateMnemonic } from "../crypto";
 import { useSeedPhraseInputView } from "../features/seed-phrase-view/SeedPhraseInputView";
 import { useStore } from "../mobx/utils/useStore";
+import { Text } from "../components/Text";
+import { Spacer } from "../components/Spacer";
+import { useNavigation } from "@react-navigation/native";
 
 export const ImportWalletScreen = observer(function ImportWalletScreen() {
-  // const navigation = useNavigation();
+  const navigation = useNavigation();
   const store = useStore();
   const confirmSeedPhrase = store.seedPhraseStore.confirmedSeedPhrase;
 
@@ -19,6 +22,16 @@ export const ImportWalletScreen = observer(function ImportWalletScreen() {
   return (
     <Screen withBottomInset>
       <View flex paddingExtraLarge>
+        <Text alignCenter>Import wallet</Text>
+
+        <Spacer extraLarge />
+
+        <Text alignCenter sizeSmall colorDarkAccentLight>
+          Enter your 12-word recovery phrase to import your wallet
+        </Text>
+
+        <Spacer extraLarge />
+
         {seedPhraseInputView}
         <View flex />
 
@@ -46,7 +59,7 @@ export const ImportWalletScreen = observer(function ImportWalletScreen() {
                 },
               } as any);
               store.walletStore.addWalletDraftSeed(parsedSeed);
-              // navigation.navigate("CreatePinScreen");
+              navigation.navigate("CreatePinScreen", { isImporting: true });
             } else {
               console.log("Inavlid mnemonic");
               console.warn(store.walletStore.walletDraft);

@@ -11,7 +11,6 @@ import { styleConstants as C } from "../styleConstants";
 
 export const WelcomeScreen = function WelcomeScreen() {
   const navigation = useNavigation();
-  // const alert = useAlert();
 
   return (
     <Screen withTopInset withBottomInset preventScroll>
@@ -62,7 +61,9 @@ export const WelcomeScreen = function WelcomeScreen() {
             withGradient
             alignSelfStretch
             title="Create a new wallet"
-            // onPress={() => navigation.navigate("CreatePinScreen")}
+            onPress={() =>
+              navigation.navigate("CreatePinScreen", { isImporting: false })
+            }
           />
         </View>
       </View>

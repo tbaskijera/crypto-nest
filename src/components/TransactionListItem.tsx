@@ -4,12 +4,13 @@ import { useQuery } from "@tanstack/react-query";
 import { getSolanaPrice, getTransaction } from "../crypto";
 import { View } from "./View";
 import { Text } from "./Text";
-import { processTransaction } from "./processTransaction";
+import { processTransaction } from "../processTransaction";
 import dayjs from "dayjs";
 import { Icon } from "./Icon";
 import { Spacer } from "./Spacer";
 import Animated, { FadeIn } from "react-native-reanimated";
 import { styleConstants as C } from "../styleConstants";
+import { assert } from "../utils/assert";
 
 export const TranscationItem = observer(function TranscationItem({
   signature,
@@ -36,9 +37,12 @@ export const TranscationItem = observer(function TranscationItem({
     return null;
   }
 
+  assert(store.walletStore.wallet, "Wallet not found");
+  assert(store.walletStore.wallet.selectedAccount, "Account not found");
+
   const transaction = processTransaction(
     query.data,
-    store.walletStore.wallet?.accounts[0].tokens.master.publicKey,
+    store.walletStore.wallet.selectedAccount.tokens.master.publicKey,
   );
 
   const { amount, date_time: dateTime, type } = transaction;
