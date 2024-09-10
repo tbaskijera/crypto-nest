@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getSolanaPrice, getTransaction } from "../crypto";
 import { View } from "./View";
 import { Text } from "./Text";
-import { processTransaction } from "../processTransaction";
+import { processTransaction } from "../utils/processTransaction";
 import dayjs from "dayjs";
 import { Icon } from "./Icon";
 import { Spacer } from "./Spacer";
